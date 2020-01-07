@@ -7,24 +7,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+public class Invoeren extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_invoeren);
 
-        Button button = (Button)findViewById(R.id.buttonToInvoeren);
+        Button button = (Button)findViewById(R.id.buttonToMain);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openInvoeren();
+                openMain();
             }
         });
     }
-
-    public void openInvoeren() {
-        Intent intent = new Intent(this, Invoeren.class);
+    public void openMain(){
+        Intent intent = new Intent (this, MainActivity.class);
         startActivity(intent);
     }
 }
