@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import dapjoo.nl.voortgangsappjoost.model.Car;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -26,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         Button saveButton = (Button)findViewById(R.id.saveSettings);
 
         loadSettings();
+
+        //Car auto = new Car("zwart", "BMW","sixties","2");
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = settings.edit(); // EDIT MODE
         editor.putString("setting", editText.getText().toString()); // WRITE STUFF
         editor.commit(); // SAVE IT
+        showToastMessage(editText.getText().toString());
     }
 
     public void loadSettings(){
@@ -67,4 +73,13 @@ public class MainActivity extends AppCompatActivity {
         EditText editText = (EditText) findViewById(R.id.editField);
         editText.setText(nieuweWaarde);
     }
+
+    public void showToastMessage(String toastMessage) {	// Laat een toast message zien
+        CharSequence tm = toastMessage;
+        int duration = Toast.LENGTH_LONG;      // kort = 0.5 sec // long = 1 sec
+        Toast toast = Toast.makeText(getApplicationContext(), tm, duration);
+        toast.show();
+    }
+
+
 }
