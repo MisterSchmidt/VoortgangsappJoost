@@ -7,7 +7,7 @@ public class Gebruiker implements Serializable {
     private String naam;
     private int leeftijd;
 
-    public Car(String naam, int leeftijd) {
+    public Gerbuiker(String naam, int leeftijd) {
         this.naam = naam;
         this.leeftijd = leeftijd;
     }

@@ -13,7 +13,7 @@ public class Vak implements Serializable {
     private int ec;
 
 
-    public Car(String naam, float cijfer, boolean behaald, String notitie, boolean keuzevak, int schooljaar, int ec) {
+    public Vak(String naam, float cijfer, boolean behaald, String notitie, boolean keuzevak, int schooljaar, int ec) {
         this.naam = naam;
         this.cijfer = cijfer;
         this.behaald = behaald;
