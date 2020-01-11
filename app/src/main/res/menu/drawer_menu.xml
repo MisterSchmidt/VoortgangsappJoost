@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home"
+            android:title="Hoofdmenu" />
+
+        <item android:id="@+id/nav_schooljaar1"
+            android:icon="@drawable/ic_schooljaar"
+            android:title="Schooljaar 1" />
+
+        <item android:id="@+id/nav_schooljaar2"
+            android:icon="@drawable/ic_schooljaar"
+            android:title="Schooljaar 2" />
+
+        <item android:id="@+id/nav_schooljaar3"
+            android:icon="@drawable/ic_schooljaar"
+            android:title="Schooljaar 3" />
+
+        <item android:id="@+id/nav_schooljaar4"
+            android:icon="@drawable/ic_schooljaar"
+            android:title="Schooljaar 4" />
+
+        <item android:id="@+id/nav_keuzevakken"
+            android:icon="@drawable/ic_schooljaar"
+            android:title="Keuzevakken" />
+
+    </group>
+
+</menu>
