@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.util.Log;
 
 
-import static dapjoo.nl.voortgangsappjoost.MainActivity.PREFS_NAME;
+//import static dapjoo.nl.voortgangsappjoost.MainActivity.PREFS_NAME;
 
 public class Invoeren extends AppCompatActivity {
 
@@ -20,7 +20,7 @@ public class Invoeren extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invoeren);
 
-        //Ophalen Shared Preferences
+        /*Ophalen Shared Preferences
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0); //Find
         boolean silent = settings.getBoolean("silentMode", false); // Read
         Log.d(" Found this value :",""+ silent +"" ); // Use
@@ -34,9 +34,9 @@ public class Invoeren extends AppCompatActivity {
             public void onClick(View v) {
                 openMain();
             }
-        });
+        });*/
     }
-
+    /*
     public void openMain(){ //method om terug te gaan naar main
         Intent intent = new Intent (this, MainActivity.class);
         startActivity(intent);
@@ -50,5 +50,5 @@ public class Invoeren extends AppCompatActivity {
         TextView textView1 = (TextView)findViewById(R.id.textView1);
         textView1.setText(nieuweWaarde);
 
-    }
+    }*/
 }
