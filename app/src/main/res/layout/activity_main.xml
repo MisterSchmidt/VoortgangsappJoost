@@ -41,30 +41,3 @@
         app:menu="@menu/drawer_menu"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
-
-    <!--<TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="MainActivity"
-        android:layout_gravity="center_horizontal"
-        android:textSize="30sp"/>
-
-    <Button
-        android:id="@+id/buttonToInvoeren"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="To Invoeren"
-        android:layout_gravity="center_horizontal"/>
-
-    <EditText
-        android:id="@+id/editField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Field"/>
-
-    <Button
-        android:id="@+id/saveSettings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Save Settings" />-->

@@ -4,8 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -18,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private DrawerLayout drawer;
 
-    //public static final String PREFS_NAME = "MijnSettings";
+    public static final String PREFS_NAME = "MijnSettings";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_home);
         }
-
     }
 
     //MENU - Wat gebeurt er als je op een knop klikt (opent een nieuwe fragment)
@@ -94,37 +97,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-    /*
-    public void openInvoeren() {
-        Intent intent = new Intent(this, Invoeren.class);
-        startActivity(intent); // code om nieuwe activity met intent te laden
-    }
-
-    public void saveSettings(){
-        // Store a value named silentMode ( of type: boolean ) :
-        EditText editText = (EditText) findViewById(R.id.editField);
-
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit(); // EDIT MODE
-        editor.putString("setting", editText.getText().toString()); // WRITE STUFF
-        editor.commit(); // SAVE IT
-        showToastMessage(editText.getText().toString());
-    }
-
-    public void loadSettings(){
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        String nieuweWaarde = settings.getString("setting", "Default");
-
-        EditText editText = (EditText) findViewById(R.id.editField);
-        editText.setText(nieuweWaarde);
-    }
-
-    public void showToastMessage(String toastMessage) {	// Laat een toast message zien
-        CharSequence tm = toastMessage;
-        int duration = Toast.LENGTH_LONG;      // kort = 0.5 sec // long = 1 sec
-        Toast toast = Toast.makeText(getApplicationContext(), tm, duration);
-        toast.show();
-    }*/
-
-
 }

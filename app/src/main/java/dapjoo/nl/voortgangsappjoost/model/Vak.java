@@ -1,11 +1,13 @@
 package dapjoo.nl.voortgangsappjoost.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.io.Serializable;
 
 public class Vak implements Serializable {
 
     private String naam;
-    private float cijfer;
+    private double cijfer;
     private boolean behaald;
     private String notitie;
     private boolean keuzevak;
@@ -31,11 +33,11 @@ public class Vak implements Serializable {
         this.naam = naam;
     }
 
-    public float getCijfer() {
+    public double getCijfer() {
         return cijfer;
     }
 
-    public void setCijfer(float cijfer) {
+    public void setCijfer(double cijfer) {
         this.cijfer = cijfer;
     }
 
@@ -77,5 +79,30 @@ public class Vak implements Serializable {
 
     public void setEc(int ec) {
         this.ec = ec;
+    }
+
+    public String toJSON(){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("cijfer", getCijfer());
+            jsonObject.put("keuzevak", isBehaald());
+            jsonObject.put("notitie", getNotitie());
+            jsonObject.put("keuzevak", isKeuzevak());
+            jsonObject.put("schooljaar", getSchooljaar());
+            jsonObject.put("ec", getEc());
+
+            return jsonObject.toString();
+
+        } catch(JSONException e) {
+            e.printStackTrace();
+            return "";
+        }
+        /*    private String naam;
+    private float cijfer;
+    private boolean behaald;
+    private String notitie;
+    private boolean keuzevak;
+    private int schooljaar;
+    private int ec;*/
     }
 }
