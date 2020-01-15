@@ -2,6 +2,7 @@ package dapjoo.nl.voortgangsappjoost.model;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.Serializable;
 
 public class Vak implements Serializable {
@@ -15,7 +16,7 @@ public class Vak implements Serializable {
     private int ec;
 
 
-    public Vak(String naam, float cijfer, boolean behaald, String notitie, boolean keuzevak, int schooljaar, int ec) {
+    public Vak(String naam, double cijfer, boolean behaald, String notitie, boolean keuzevak, int schooljaar, int ec) {
         this.naam = naam;
         this.cijfer = cijfer;
         this.behaald = behaald;
@@ -84,6 +85,7 @@ public class Vak implements Serializable {
     public String toJSON(){
         JSONObject jsonObject = new JSONObject();
         try {
+            jsonObject.put("naam", getNaam());
             jsonObject.put("cijfer", getCijfer());
             jsonObject.put("keuzevak", isBehaald());
             jsonObject.put("notitie", getNotitie());
@@ -97,8 +99,9 @@ public class Vak implements Serializable {
             e.printStackTrace();
             return "";
         }
-        /*    private String naam;
-    private float cijfer;
+        /*
+    private String naam;
+    private double cijfer;
     private boolean behaald;
     private String notitie;
     private boolean keuzevak;
