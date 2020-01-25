@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
@@ -25,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private DrawerLayout drawer;
     public static final String PREFS_NAME = "vakData";
-    ArrayList<Vak> vakken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +34,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Aanmaken van het menu
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        loadData();
-
-
 
         /////* Toolbar gedeelte en navigation drawer */////
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -52,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
 
-
         //Open eerste pagina zonder er op te klikken
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
@@ -61,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         /////* Toolbar gedeelte en navigation drawer */////
     }
 
-    public void saveData(){
+    /*public void saveData(){
         SharedPreferences sharedPreferences = getSharedPreferences("vakData", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
@@ -87,14 +83,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void addDefaultCourses(){
         vakken = new ArrayList<>();
 
-        Vak IOPR2 = new Vak("IOPR2",0, false, "", false,1,3);
-        Vak IMTPMD = new Vak("IMTPMD",0, false, "", false,2,3);
+        Vak vak0 = new Vak("IOPR2",0, false, "", false,1,3);
+        Vak vak1 = new Vak("IMTPMD",0, false, "", false,2,3);
 
-        vakken.add(IOPR2);
-        vakken.add(IMTPMD);
+        vakken.add(vak0);
+        vakken.add(vak1);
 
         saveData();
-    }
+    }*/
 
     //MENU - Wat gebeurt er als je op een knop klikt (opent een nieuwe fragment)
     public boolean onNavigationItemSelected(@NonNull MenuItem item){
