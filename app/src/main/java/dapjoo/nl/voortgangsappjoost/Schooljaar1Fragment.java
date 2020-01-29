@@ -1,11 +1,11 @@
 package dapjoo.nl.voortgangsappjoost;
 
 import android.content.ContentValues;
-import android.content.SharedPreferences;
+
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,22 +14,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import java.util.ArrayList;
-
-
-import dapjoo.nl.voortgangsappjoost.model.Vak;
 
 public class Schooljaar1Fragment extends Fragment {
 
-    ArrayList<Vak> vakken;
-    String[] schooljaar1Items;
-    Vak vak;
+
     private SQLiteDatabase mDatabase;
     private VakkenAdapter mAdapter;
 
-    protected void onCreate(){
-
-    }
 
     @Override
     @Nullable
@@ -54,10 +45,11 @@ public class Schooljaar1Fragment extends Fragment {
         recyclerview.setAdapter(mAdapter);
 
 
+
         ////////
 
-        String naam = "Hallo";
-        double cijfer = 5.5;
+        String naam = "IOPR3";
+        double cijfer = 4.5;
         int schooljaar = 4;
         int keuzevak = 1;
         int ec = 3;

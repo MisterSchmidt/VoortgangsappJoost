@@ -4,14 +4,16 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp">
+    android:layout_marginTop="6dp"
+    android:elevation="4dp"
+    android:padding="8dp"
+    android:background="#EEEEEE">
 
-    <TextView
+    <ImageView
+        android:id="@+id/imageview_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
-        android:textSize="30sp"
-        android:id="@+id/textview_amount_item"/>
+        android:src="@drawable/completed_true" />
 
     <TextView
         android:id="@+id/textview_name_item"
@@ -20,6 +22,25 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:text="product"
-        android:textSize="30sp"/>
+        android:layout_gravity="center_vertical"
+        android:textSize="30sp"
+        android:paddingLeft="8dp"
+        android:textColor="#444444"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="0"
+        android:textSize="30sp"
+        android:paddingRight="16dp"
+        android:id="@+id/textview_cijfer_item"
+        android:textColor="#444444"/>
 
 </LinearLayout>

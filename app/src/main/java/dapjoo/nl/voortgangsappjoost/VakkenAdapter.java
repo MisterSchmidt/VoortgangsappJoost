@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,14 +23,16 @@ public class VakkenAdapter extends RecyclerView.Adapter<VakkenAdapter.VakkenView
 
     public class VakkenViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView nameText;
-        public TextView countText;
+        public TextView naamText;
+        public TextView cijferText;
+        public ImageView image;
 
         public VakkenViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            nameText = itemView.findViewById(R.id.textview_name_item);
-            countText = itemView.findViewById(R.id.textview_amount_item);
+            naamText = itemView.findViewById(R.id.textview_name_item);
+            cijferText = itemView.findViewById(R.id.textview_cijfer_item);
+            image = itemView.findViewById(R.id.imageview_item);
         }
     }
 
@@ -47,13 +50,20 @@ public class VakkenAdapter extends RecyclerView.Adapter<VakkenAdapter.VakkenView
             return;
         }
 
-        String name = mCursor.getString(mCursor.getColumnIndex(VakkenContract.VakkenEntry.COLUMN_NAAM));
-        int amount = mCursor.getInt(mCursor.getColumnIndex(VakkenContract.VakkenEntry.COLUMN_CIJFER));
+        String naam = mCursor.getString(mCursor.getColumnIndex(VakkenContract.VakkenEntry.COLUMN_NAAM));
+        double cijfer = mCursor.getDouble(mCursor.getColumnIndex(VakkenContract.VakkenEntry.COLUMN_CIJFER));
         long id = mCursor.getLong(mCursor.getColumnIndex(VakkenContract.VakkenEntry._ID));
 
-        holder.nameText.setText(name);
-        holder.countText.setText(String.valueOf(amount));
+        holder.naamText.setText(naam);
+        holder.cijferText.setText(String.valueOf(cijfer));
         holder.itemView.setTag(id);
+
+        if(cijfer < 5.5){
+            holder.image.setImageResource(R.drawable.completed_false);
+        }else{
+            holder.image.setImageResource(R.drawable.completed_true);
+        }
+
     }
 
     @Override
