@@ -44,11 +44,7 @@ public class Schooljaar1Fragment extends Fragment {
         mAdapter = new VakkenAdapter(getActivity(), getAllItems());
         recyclerview.setAdapter(mAdapter);
 
-
-
-        ////////
-
-        String naam = "IOPR3";
+        /*String naam = "IOPR3";
         double cijfer = 4.5;
         int schooljaar = 4;
         int keuzevak = 1;
@@ -63,17 +59,10 @@ public class Schooljaar1Fragment extends Fragment {
         cv.put(VakkenContract.VakkenEntry.COLUMN_EC, ec);
         cv.put(VakkenContract.VakkenEntry.COLUMN_NOTITIE, notitie);
 
-        mDatabase.insert(VakkenContract.VakkenEntry.TABLE_NAME, null, cv);
+        mDatabase.insert(VakkenContract.VakkenEntry.TABLE_NAME, null, cv);*/
+
         mAdapter.swapCursor(getAllItems());
 
-
-        /*
-                VakkenContract.VakkenEntry.COLUMN_SCHOOLJAAR + " INTEGER NOT NULL, " +
-                VakkenContract.VakkenEntry.COLUMN_KEUZEVAK + " INTEGER NOT NULL, " +
-                VakkenContract.VakkenEntry.COLUMN_EC + " INTEGER NOT NULL, " +
-                VakkenContract.VakkenEntry.COLUMN_NOTITIE + " TEXT NOT NULL, " +
-         */
-        ////////
     }
 
     private Cursor getAllItems(){

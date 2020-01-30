@@ -15,6 +15,7 @@
         android:src="@mipmap/ic_launcher_round"/>
 
     <TextView
+        android:id="@+id/tv_gebruiker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
@@ -22,6 +23,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <TextView
+        android:id="@+id/tv_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="s1083147@student.hsleiden.nl"/>
