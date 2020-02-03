@@ -43,9 +43,3 @@ public class VakkenDBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 }
-
-/*        public static final String COLUMN_BEHAALD = "behaald";
- public static final String COLUMN_SCHOOLJAAR = "schooljaar";
- public static final String COLUMN_KEUZEVAK = "keuzevak";
- public static final String COLUMN_EC = "ec";
- public static final String COLUMN_NOTITIE = "notitie";*/

@@ -1,6 +1,9 @@
 package dapjoo.nl.voortgangsappjoost;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,27 +13,60 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import static android.content.ContentValues.TAG;
 
 public class Schooljaar3Fragment extends Fragment {
 
-    @Nullable
+    private SQLiteDatabase mDatabase;
+    private VakkenAdapter mAdapter;
+
+
     @Override
+    @Nullable
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_schooljaar3, container, false);
 
-        String[] schooljaar3Items = {"hoi", "hoi", "hallo", "poepje"};
-
-        ListView listView = (ListView) view.findViewById(R.id.schooljaar3ListView);
-
-        //Array Adapter
-        ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(
-                getActivity(),
-                android.R.layout.simple_list_item_1,
-                schooljaar3Items
-        );
-
-        listView.setAdapter(listViewAdapter);
-
         return view;
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        VakkenDBHelper dbHelper = new VakkenDBHelper(getActivity());
+        mDatabase = dbHelper.getWritableDatabase();
+
+        RecyclerView recyclerview = view.findViewById(R.id.recyclerview);
+        recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mAdapter = new VakkenAdapter(getActivity(), getAllItems());
+        recyclerview.setAdapter(mAdapter);
+
+        mAdapter.swapCursor(getAllItems());
+
+        mAdapter.setOnItemClickListener(new VakkenAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position, long help) {
+                int y = (int) help;
+                Log.d(TAG, "Adapter position: " + position + " - SQL Tag: " + y);
+            }
+        });
+
+    }
+
+    private Cursor getAllItems(){
+        return mDatabase.query(
+                VakkenContract.VakkenEntry.TABLE_NAME,
+                null,
+                VakkenContract.VakkenEntry.COLUMN_SCHOOLJAAR + " = 3",
+                null,
+                null,
+                null,
+                VakkenContract.VakkenEntry.COLUMN_TIMESTAMP + " DESC"
+        );
     }
 }

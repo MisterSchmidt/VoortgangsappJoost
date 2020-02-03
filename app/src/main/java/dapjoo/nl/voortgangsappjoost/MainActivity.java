@@ -53,10 +53,11 @@ public class MainActivity extends AppCompatActivity implements DialogFirst.Dialo
         tvGebruiker = (TextView) headerView.findViewById(R.id.tv_gebruiker);
         tvEmail = (TextView) headerView.findViewById(R.id.tv_email);
 
-        createDefaultVakken();
+
 
         // Start dialog en save prefs of insert prefs
         if(firstStart){
+            createDefaultVakken();
             showDialogFirst();
         }else{
             insertPrefs();
@@ -156,22 +157,32 @@ public class MainActivity extends AppCompatActivity implements DialogFirst.Dialo
 
     public void createDefaultVakken(){
 
-        String naam = "IOPR5";
-        double cijfer = 5.5;
-        int schooljaar = 4;
-        int keuzevak = 1;
-        int ec = 3;
-        String notitie = "ik ben gek";
+        String[] naam = new String[] {"IPMEDT1", "IMHTB", "IOPR1", "IPBIT1", "ISMI", "IIBPM", "IRDB", "IPSEN1", "IMUML", "IOPR2", "ITIM", "IPFIT1",
+        "IFIT", "IWEB", "INST", "ICOMMP", "ISLP", /*17*/ "IRDBMS", "IPMEDT2", "IMTD1", "IQUA", "IPMEDT4", "IMTPMD", "IITORG", "IPMEDT3", "IMTUE", "ISEC",
+        "IPMEDT5", "IMTHE1", "ICOMMH", "ISLH1", /*31*/ "IETH", "ISCRIP", "IPMEDTH", "IMTCM", "IMTHMI", "IMTMC", "ISLH2", "IKM30", /*39*/ "ISLH3", "IWLS",
+        "IWLA" /*42*/};
 
-        ContentValues cv = new ContentValues();
-        cv.put(VakkenContract.VakkenEntry.COLUMN_NAAM, naam);
-        cv.put(VakkenContract.VakkenEntry.COLUMN_CIJFER, cijfer);
-        cv.put(VakkenContract.VakkenEntry.COLUMN_SCHOOLJAAR, schooljaar);
-        cv.put(VakkenContract.VakkenEntry.COLUMN_KEUZEVAK, keuzevak);
-        cv.put(VakkenContract.VakkenEntry.COLUMN_EC, ec);
-        cv.put(VakkenContract.VakkenEntry.COLUMN_NOTITIE, notitie);
+        int[] ec = new int[] {6, 3, 4, 5, 3, 3, 3, 5, 3, 4, 3, 5, 3, 3, 3, 3, 1, /*17*/ 3, 6, 3, 3, 6, 3, 3, 6, 3, 3, 6, 3, 3, 1, /*31*/
+        3, 3, 9, 3, 3, 3, 1, 30, /*39*/ 1, 30, 30 /*42*/};
 
-        mDatabase.insert(VakkenContract.VakkenEntry.TABLE_NAME, null, cv);
+        int[] schooljaar = new int[] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ,1, /*17*/ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, /*31*/
+        3, 3, 3, 3, 3, 3, 3, 3, /*39*/ 4, 4, 4 /*42*/};
+
+        double cijfer = 0.0;
+        String notitie = "";
+        int keuzevak = 0;
+
+        for(int i = 0; i < 42; i++){
+            ContentValues cv = new ContentValues();
+            cv.put(VakkenContract.VakkenEntry.COLUMN_NAAM, naam[i]);
+            cv.put(VakkenContract.VakkenEntry.COLUMN_CIJFER, cijfer);
+            cv.put(VakkenContract.VakkenEntry.COLUMN_SCHOOLJAAR, schooljaar[i]);
+            cv.put(VakkenContract.VakkenEntry.COLUMN_KEUZEVAK, keuzevak);
+            cv.put(VakkenContract.VakkenEntry.COLUMN_EC, ec[i]);
+            cv.put(VakkenContract.VakkenEntry.COLUMN_NOTITIE, notitie);
+
+            mDatabase.insert(VakkenContract.VakkenEntry.TABLE_NAME, null, cv);
+        }
     }
 }
 

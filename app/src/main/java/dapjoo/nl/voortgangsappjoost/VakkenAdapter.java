@@ -15,6 +15,15 @@ public class VakkenAdapter extends RecyclerView.Adapter<VakkenAdapter.VakkenView
 
     private Context mContext;
     private Cursor mCursor;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener{
+        void onItemClick(int position, long sqltag);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        mListener = listener;
+    }
 
     public VakkenAdapter(Context context, Cursor cursor){
         mContext = context;
@@ -27,12 +36,29 @@ public class VakkenAdapter extends RecyclerView.Adapter<VakkenAdapter.VakkenView
         public TextView cijferText;
         public ImageView image;
 
-        public VakkenViewHolder(@NonNull View itemView) {
+        public VakkenViewHolder(@NonNull final View itemView, final OnItemClickListener listener) {
             super(itemView);
 
             naamText = itemView.findViewById(R.id.textview_name_item);
             cijferText = itemView.findViewById(R.id.textview_cijfer_item);
             image = itemView.findViewById(R.id.imageview_item);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null){
+
+                        int position = getAdapterPosition();
+                        long sqltag = (long) itemView.getTag();
+
+                        if (position != RecyclerView.NO_POSITION){
+                            listener.onItemClick(position, sqltag);
+                        }
+
+
+                    }
+                }
+            });
         }
     }
 
@@ -41,7 +67,7 @@ public class VakkenAdapter extends RecyclerView.Adapter<VakkenAdapter.VakkenView
     public VakkenViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.vak_item, parent, false);
-        return new VakkenViewHolder(view);
+        return new VakkenViewHolder(view, mListener);
     }
 
     @Override
