@@ -54,8 +54,6 @@ public class VakkenAdapter extends RecyclerView.Adapter<VakkenAdapter.VakkenView
                         if (position != RecyclerView.NO_POSITION){
                             listener.onItemClick(position, sqltag);
                         }
-
-
                     }
                 }
             });

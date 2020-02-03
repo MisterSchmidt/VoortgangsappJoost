@@ -6,4 +6,10 @@
 
     <color name="gradientTop">#F4B2A6</color>
     <color name="gradientDown">#C57677</color>
+
+    <color name="gradientTTop">#141517</color>
+    <color name="gradientTDown">#383951</color>
+
+    <color name="LightText">#FFFFFF</color>
+    <color name="DarkText">#444444</color>
 </resources>

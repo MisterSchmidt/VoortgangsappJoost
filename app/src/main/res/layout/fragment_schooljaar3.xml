@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/gradient">
+    android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/schooljaar3_ec"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/extra_banner"
+        android:text="0/0 EC"
+        android:textSize="24dp"
+        android:textColor="@color/LightText"
+        android:gravity="center"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true"/>
+        android:layout_below="@+id/schooljaar3_ec"
+        android:clickable="true"
+        android:background="@drawable/gradient"/>
 
 </RelativeLayout>

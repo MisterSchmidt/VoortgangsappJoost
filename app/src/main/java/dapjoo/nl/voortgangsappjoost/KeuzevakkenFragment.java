@@ -7,8 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,9 +29,7 @@ public class KeuzevakkenFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_keuzevakken, container, false);
-
         return view;
-
     }
 
     @Override
@@ -46,16 +44,19 @@ public class KeuzevakkenFragment extends Fragment {
         mAdapter = new VakkenAdapter(getActivity(), getAllItems());
         recyclerview.setAdapter(mAdapter);
 
+        TextView tv = view.findViewById(R.id.keuzevakken_ec);
+        tv.setText(getReachedEC() + "/" + getTotalEC());
+
         mAdapter.swapCursor(getAllItems());
 
         mAdapter.setOnItemClickListener(new VakkenAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(int position, long help) {
-                int y = (int) help;
-                Log.d(TAG, "Adapter position: " + position + " - SQL Tag: " + y);
+            public void onItemClick(int position, long sqltag) {
+                int sql = (int) sqltag;
+                Log.d(TAG, "Adapter position: " + position + " - SQL Tag: " + sql);
+                Toast.makeText(getActivity(), "Adapter position: " + position + " - SQL Tag: " + sql, Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     private Cursor getAllItems(){
@@ -68,5 +69,40 @@ public class KeuzevakkenFragment extends Fragment {
                 null,
                 VakkenContract.VakkenEntry.COLUMN_TIMESTAMP + " DESC"
         );
+    }
+
+    public Cursor fetchEC(double minCijfer) {
+        return mDatabase.rawQuery(
+                "SELECT " + VakkenContract.VakkenEntry.COLUMN_EC +
+                        " FROM " + VakkenContract.VakkenEntry.TABLE_NAME +
+                        " WHERE " + VakkenContract.VakkenEntry.COLUMN_KEUZEVAK + " = 1" +
+                        " AND " + VakkenContract.VakkenEntry.COLUMN_CIJFER + " > " + minCijfer
+                ,null);
+    }
+
+    private int getTotalEC(){
+        Cursor cTotalEC = fetchEC(-1);
+        int i = 0;
+        try {
+            while (cTotalEC.moveToNext()) {
+                i = i + cTotalEC.getInt(cTotalEC.getColumnIndex(VakkenContract.VakkenEntry.COLUMN_EC));
+            }
+        } finally {
+            cTotalEC.close();
+            return i;
+        }
+    }
+
+    private int getReachedEC(){
+        Cursor cReachedEC = fetchEC(5.5);
+        int i = 0;
+        try {
+            while (cReachedEC.moveToNext()) {
+                i = i + cReachedEC.getInt(cReachedEC.getColumnIndex(VakkenContract.VakkenEntry.COLUMN_EC));
+            }
+        } finally {
+            cReachedEC.close();
+            return i;
+        }
     }
 }

@@ -3,12 +3,6 @@ package dapjoo.nl.voortgangsappjoost;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-
-import android.database.sqlite.SQLiteOpenHelper;
-
-import androidx.annotation.Nullable;
 
 public class VakkenDBHelper extends SQLiteOpenHelper {
 
@@ -42,4 +36,7 @@ public class VakkenDBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + VakkenContract.VakkenEntry.TABLE_NAME);
         onCreate(db);
     }
+
+
+
 }

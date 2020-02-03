@@ -12,7 +12,6 @@ public class VakkenContract {
         public static final String TABLE_NAME = "vakken";
         public static final String COLUMN_NAAM = "naam";
         public static final String COLUMN_CIJFER = "cijfer";
-        public static final String COLUMN_BEHAALD = "behaald";
         public static final String COLUMN_SCHOOLJAAR = "schooljaar";
         public static final String COLUMN_KEUZEVAK = "keuzevak";
         public static final String COLUMN_EC = "ec";
