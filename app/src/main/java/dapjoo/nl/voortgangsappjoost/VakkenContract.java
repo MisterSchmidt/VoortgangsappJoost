@@ -13,7 +13,6 @@ public class VakkenContract {
         public static final String COLUMN_NAAM = "naam";
         public static final String COLUMN_CIJFER = "cijfer";
         public static final String COLUMN_SCHOOLJAAR = "schooljaar";
-        public static final String COLUMN_KEUZEVAK = "keuzevak";
         public static final String COLUMN_EC = "ec";
         public static final String COLUMN_NOTITIE = "notitie";
         public static final String COLUMN_TIMESTAMP = "timestamp";

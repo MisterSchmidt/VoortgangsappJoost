@@ -1,6 +1,7 @@
 package dapjoo.nl.voortgangsappjoost;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -8,6 +9,7 @@ public class VakkenDBHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "vakken.db";
     public static final int DATABASE_VERSION = 1;
+
 
 
     public VakkenDBHelper(Context context) {
@@ -22,7 +24,6 @@ public class VakkenDBHelper extends SQLiteOpenHelper {
                 VakkenContract.VakkenEntry.COLUMN_NAAM + " TEXT NOT NULL, " +
                 VakkenContract.VakkenEntry.COLUMN_CIJFER + " REAL NOT NULL, " +
                 VakkenContract.VakkenEntry.COLUMN_SCHOOLJAAR + " INTEGER NOT NULL, " +
-                VakkenContract.VakkenEntry.COLUMN_KEUZEVAK + " INTEGER NOT NULL, " +
                 VakkenContract.VakkenEntry.COLUMN_EC + " INTEGER NOT NULL, " +
                 VakkenContract.VakkenEntry.COLUMN_NOTITIE + " TEXT NOT NULL, " +
                 VakkenContract.VakkenEntry.COLUMN_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
@@ -36,7 +37,4 @@ public class VakkenDBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + VakkenContract.VakkenEntry.TABLE_NAME);
         onCreate(db);
     }
-
-
-
 }

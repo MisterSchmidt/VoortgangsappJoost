@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/vak_bewerken_cijfer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Cijfer"/>
+
+    <EditText
+        android:id="@+id/vak_bewerken_notitie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Notitie"
+        android:minLines="10"
+        android:maxLines="15"
+        android:layout_below="@+id/vak_bewerken_cijfer"/>
+
+</RelativeLayout>

@@ -22,6 +22,7 @@ public class KeuzevakkenFragment extends Fragment {
 
     private SQLiteDatabase mDatabase;
     private VakkenAdapter mAdapter;
+    private int schooljaar = 0;
 
 
     @Override
@@ -41,29 +42,42 @@ public class KeuzevakkenFragment extends Fragment {
 
         RecyclerView recyclerview = view.findViewById(R.id.recyclerview);
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAdapter = new VakkenAdapter(getActivity(), getAllItems());
+        mAdapter = new VakkenAdapter(getActivity(), fetchAllItems());
         recyclerview.setAdapter(mAdapter);
 
         TextView tv = view.findViewById(R.id.keuzevakken_ec);
-        tv.setText(getReachedEC() + "/" + getTotalEC());
+        tv.setText(getReachedEC(schooljaar, 5.4) + "/" + getTotalEC(schooljaar, -1));
 
-        mAdapter.swapCursor(getAllItems());
+        mAdapter.swapCursor(fetchAllItems());
 
         mAdapter.setOnItemClickListener(new VakkenAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position, long sqltag) {
-                int sql = (int) sqltag;
-                Log.d(TAG, "Adapter position: " + position + " - SQL Tag: " + sql);
-                Toast.makeText(getActivity(), "Adapter position: " + position + " - SQL Tag: " + sql, Toast.LENGTH_SHORT).show();
+
+                String notitie = getNotitie(sqltag);
+                String naam = getNaam(sqltag);
+                double cijfer = getCijfer(sqltag);
+
+                Bundle args = new Bundle();
+                args.putLong("id", sqltag);
+                args.putString("notitie", notitie);
+                args.putString("naam", naam);
+                args.putDouble("cijfer", cijfer);
+                args.putInt("schooljaar", schooljaar);
+
+                DialogVakBewerken dialogVakBewerken = new DialogVakBewerken();
+                dialogVakBewerken.setArguments(args);
+                dialogVakBewerken.show(getActivity().getSupportFragmentManager(), "Dialog Vak Bewerken");
             }
         });
     }
 
-    private Cursor getAllItems(){
+    // Voert een DB entry uit en genereerd een lijst van items op volgorde voor de Recyclerview
+    private Cursor fetchAllItems(){
         return mDatabase.query(
                 VakkenContract.VakkenEntry.TABLE_NAME,
                 null,
-                VakkenContract.VakkenEntry.COLUMN_KEUZEVAK + " = 1",
+                VakkenContract.VakkenEntry.COLUMN_SCHOOLJAAR + " = " + schooljaar,
                 null,
                 null,
                 null,
@@ -71,37 +85,101 @@ public class KeuzevakkenFragment extends Fragment {
         );
     }
 
-    public Cursor fetchEC(double minCijfer) {
+    public Cursor fetchEC(int schooljaar, double minCijfer) {
         return mDatabase.rawQuery(
                 "SELECT " + VakkenContract.VakkenEntry.COLUMN_EC +
                         " FROM " + VakkenContract.VakkenEntry.TABLE_NAME +
-                        " WHERE " + VakkenContract.VakkenEntry.COLUMN_KEUZEVAK + " = 1" +
+                        " WHERE " + VakkenContract.VakkenEntry.COLUMN_SCHOOLJAAR + " = " + schooljaar +
                         " AND " + VakkenContract.VakkenEntry.COLUMN_CIJFER + " > " + minCijfer
                 ,null);
     }
 
-    private int getTotalEC(){
-        Cursor cTotalEC = fetchEC(-1);
-        int i = 0;
+    public Cursor fetchNaam(long id) {
+        return mDatabase.rawQuery(
+                "SELECT " + VakkenContract.VakkenEntry.COLUMN_NAAM +
+                        " FROM " + VakkenContract.VakkenEntry.TABLE_NAME +
+                        " WHERE " + VakkenContract.VakkenEntry._ID + " = " + id
+                ,null);
+    }
+
+
+    public Cursor fetchCijfer(long id) {
+        return mDatabase.rawQuery(
+                "SELECT " + VakkenContract.VakkenEntry.COLUMN_CIJFER +
+                        " FROM " + VakkenContract.VakkenEntry.TABLE_NAME +
+                        " WHERE " + VakkenContract.VakkenEntry._ID + " = " + id
+                ,null);
+    }
+
+    public Cursor fetchNotitie(long id) {
+        return mDatabase.rawQuery(
+                "SELECT " + VakkenContract.VakkenEntry.COLUMN_NOTITIE +
+                        " FROM " + VakkenContract.VakkenEntry.TABLE_NAME +
+                        " WHERE " + VakkenContract.VakkenEntry._ID + " = " + id
+                ,null);
+    }
+
+    private String getNaam(long id){
+        String i = "Default";
+        Cursor c = fetchNaam(id);
         try {
-            while (cTotalEC.moveToNext()) {
-                i = i + cTotalEC.getInt(cTotalEC.getColumnIndex(VakkenContract.VakkenEntry.COLUMN_EC));
+            while (c.moveToNext()) {
+                i = c.getString(c.getColumnIndex(VakkenContract.VakkenEntry.COLUMN_NAAM));
             }
         } finally {
-            cTotalEC.close();
+            c.close();
             return i;
         }
     }
 
-    private int getReachedEC(){
-        Cursor cReachedEC = fetchEC(5.5);
-        int i = 0;
+    private double getCijfer(long id){
+        double i = 0.0;
+        Cursor c = fetchCijfer(id);
         try {
-            while (cReachedEC.moveToNext()) {
-                i = i + cReachedEC.getInt(cReachedEC.getColumnIndex(VakkenContract.VakkenEntry.COLUMN_EC));
+            while (c.moveToNext()) {
+                i = c.getDouble(c.getColumnIndex(VakkenContract.VakkenEntry.COLUMN_CIJFER));
             }
         } finally {
-            cReachedEC.close();
+            c.close();
+            return i;
+        }
+    }
+
+    private String getNotitie(long id){
+        String i = "Default";
+        Cursor c = fetchNotitie(id);
+        try {
+            while (c.moveToNext()) {
+                i = c.getString(c.getColumnIndex(VakkenContract.VakkenEntry.COLUMN_NOTITIE));
+            }
+        } finally {
+            c.close();
+            return i;
+        }
+    }
+
+    private int getTotalEC(int sj, double mc ){
+        Cursor c = fetchEC(sj, mc);
+        int i = 0;
+        try {
+            while (c.moveToNext()) {
+                i = i + c.getInt(c.getColumnIndex(VakkenContract.VakkenEntry.COLUMN_EC));
+            }
+        } finally {
+            c.close();
+            return i;
+        }
+    }
+
+    private int getReachedEC(int sj, double mc){
+        Cursor c = fetchEC(sj, mc);
+        int i = 0;
+        try {
+            while (c.moveToNext()) {
+                i = i + c.getInt(c.getColumnIndex(VakkenContract.VakkenEntry.COLUMN_EC));
+            }
+        } finally {
+            c.close();
             return i;
         }
     }

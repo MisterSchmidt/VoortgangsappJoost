@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F4B2A6">
 
     <TextView
         android:id="@+id/keuzevakken_ec"
@@ -13,11 +14,22 @@
         android:textColor="@color/LightText"
         android:gravity="center"/>
 
+    <Button
+        android:id="@+id/btn_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Toevoegen"
+        android:layout_below="@id/keuzevakken_ec"
+        android:layout_marginTop="-16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/keuzevakken_ec"
+        android:layout_below="@+id/btn_add"
         android:clickable="true"
         android:background="@drawable/gradient"/>
 

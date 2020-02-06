@@ -11,17 +11,19 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity implements DialogFirst.DialogFirstListener, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements DialogFirst.DialogFirstListener, NavigationView.OnNavigationItemSelectedListener, DialogVakBewerken.DialogVakBewerkenListener {
 
     private DrawerLayout drawer;
     private TextView tvGebruiker;
     private TextView tvEmail;
+    private TextView mTitle;
     private View headerView;
     private SQLiteDatabase mDatabase;
 
@@ -36,12 +38,16 @@ public class MainActivity extends AppCompatActivity implements DialogFirst.Dialo
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         boolean firstStart = prefs.getBoolean("firstStart", true);
 
+        //Laad database
         VakkenDBHelper dbHelper = new VakkenDBHelper(this);
         mDatabase = dbHelper.getWritableDatabase();
 
         // Toolbar gedeelte en navigation drawer
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mTitle = toolbar.findViewById(R.id.toolbar_title);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        mTitle.setText("Voortgangs App");
 
         // Drawer maken
         drawer = findViewById(R.id.drawer_layeout);
@@ -53,21 +59,18 @@ public class MainActivity extends AppCompatActivity implements DialogFirst.Dialo
         tvGebruiker = (TextView) headerView.findViewById(R.id.tv_gebruiker);
         tvEmail = (TextView) headerView.findViewById(R.id.tv_email);
 
+        //Maak toolbar knop aan.
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
 
-
-        // Start dialog en save prefs of insert prefs
+        // Start dialog of laad settigs
         if(firstStart){
             createDefaultVakken();
             showDialogFirst();
         }else{
             insertPrefs();
         }
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
 
         //Open eerste pagina zonder er op te klikken
         if(savedInstanceState == null) {
@@ -77,38 +80,52 @@ public class MainActivity extends AppCompatActivity implements DialogFirst.Dialo
         /////* Toolbar gedeelte en navigation drawer */////
     }
 
-    //MENU - Wat gebeurt er als je op een knop klikt (opent een nieuwe fragment)
+    //MENU - Wat gebeurt er als je op een knop klikt (opent een nieuwe fragment of voert code uit)
     public boolean onNavigationItemSelected(@NonNull MenuItem item){
         switch(item.getItemId()){
 
             case R.id.nav_home:
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
+                mTitle.setText("Voortgangs App");
                 break;
 
             case R.id.nav_schooljaar1:
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Schooljaar1Fragment()).commit();
+                mTitle.setText("Schooljaar 1");
                 break;
 
             case R.id.nav_schooljaar2:
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Schooljaar2Fragment()).commit();
+                mTitle.setText("Schooljaar 2");
                 break;
 
             case R.id.nav_schooljaar3:
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Schooljaar3Fragment()).commit();
+                mTitle.setText("Schooljaar 3");
                 break;
 
             case R.id.nav_schooljaar4:
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Schooljaar4Fragment()).commit();
+                mTitle.setText("Schooljaar 4");
                 break;
 
             case R.id.nav_keuzevakken:
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new KeuzevakkenFragment()).commit();
+                mTitle.setText("Keuzevakken");
+                break;
+
+            case R.id.nav_upload:
+                Toast.makeText(this,"No network", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.nav_download:
+                Toast.makeText(this,"No network", Toast.LENGTH_SHORT).show();
                 break;
         }
 
@@ -125,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements DialogFirst.Dialo
         }
     }
 
+    //Inladen van settings voor de navigation drawer
     private void insertPrefs(){
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         String usr = prefs.getString("user", "");
@@ -133,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements DialogFirst.Dialo
         tvEmail.setText(eml);
     }
 
+    //Laten zien van de "one time" dialog
     private void showDialogFirst(){
         DialogFirst dialogFirst = new DialogFirst();
         dialogFirst.show(getSupportFragmentManager(), "Dialog First");
@@ -143,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements DialogFirst.Dialo
         editor.apply();
     }
 
+    //opslaan van dialog in settings file "prefs"
     @Override
     public void applyTexts(String usr, String eml) {
         tvGebruiker.setText(usr);
@@ -155,6 +175,7 @@ public class MainActivity extends AppCompatActivity implements DialogFirst.Dialo
         editor.apply();
     }
 
+    //invoeren van de standaard vakken in SQLITE bij eerste keer opstarten
     public void createDefaultVakken(){
 
         String[] naam = new String[] {"IPMEDT1", "IMHTB", "IOPR1", "IPBIT1", "ISMI", "IIBPM", "IRDB", "IPSEN1", "IMUML", "IOPR2", "ITIM", "IPFIT1",
@@ -170,18 +191,50 @@ public class MainActivity extends AppCompatActivity implements DialogFirst.Dialo
 
         double cijfer = 0.0;
         String notitie = "";
-        int keuzevak = 0;
 
         for(int i = 0; i < 42; i++){
             ContentValues cv = new ContentValues();
             cv.put(VakkenContract.VakkenEntry.COLUMN_NAAM, naam[i]);
             cv.put(VakkenContract.VakkenEntry.COLUMN_CIJFER, cijfer);
             cv.put(VakkenContract.VakkenEntry.COLUMN_SCHOOLJAAR, schooljaar[i]);
-            cv.put(VakkenContract.VakkenEntry.COLUMN_KEUZEVAK, keuzevak);
             cv.put(VakkenContract.VakkenEntry.COLUMN_EC, ec[i]);
             cv.put(VakkenContract.VakkenEntry.COLUMN_NOTITIE, notitie);
 
             mDatabase.insert(VakkenContract.VakkenEntry.TABLE_NAME, null, cv);
+        }
+    }
+
+    // Voor het updaten van een item
+    @Override
+    public void editVak(long id, double cijfer, String notitie, int schooljaar) {
+
+        mDatabase.execSQL( "UPDATE " + VakkenContract.VakkenEntry.TABLE_NAME +
+                " SET " + VakkenContract.VakkenEntry.COLUMN_NOTITIE + " = '" + notitie +
+                "' WHERE " + VakkenContract.VakkenEntry._ID + " = " + id);
+
+        mDatabase.execSQL( "UPDATE " + VakkenContract.VakkenEntry.TABLE_NAME +
+                " SET " + VakkenContract.VakkenEntry.COLUMN_CIJFER + " = '" + cijfer +
+                "' WHERE " + VakkenContract.VakkenEntry._ID + " = " + id);
+
+        if(schooljaar == 0){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new KeuzevakkenFragment()).commit();
+            mTitle.setText("Keuzevakken");
+        }
+        else if(schooljaar == 1){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Schooljaar1Fragment()).commit();
+            mTitle.setText("Schooljaar 1");
+        }
+        else if(schooljaar == 2){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Schooljaar2Fragment()).commit();
+            mTitle.setText("Schooljaar 2");
+        }
+        else if(schooljaar == 3){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Schooljaar3Fragment()).commit();
+            mTitle.setText("Schooljaar 3");
+        }
+        else if(schooljaar == 4){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Schooljaar4Fragment()).commit();
+            mTitle.setText("Schooljaar 4");
         }
     }
 }

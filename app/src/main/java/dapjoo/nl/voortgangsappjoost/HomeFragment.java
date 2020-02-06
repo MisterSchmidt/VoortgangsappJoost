@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment {
     }
 
     private int getReachedEC(){
-        Cursor cReachedEC = fetchEC(5.5);
+        Cursor cReachedEC = fetchEC(5.4);
         int i = 0;
         try {
             while (cReachedEC.moveToNext()) {
