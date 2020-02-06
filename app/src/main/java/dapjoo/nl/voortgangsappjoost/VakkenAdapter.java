@@ -17,15 +17,15 @@ public class VakkenAdapter extends RecyclerView.Adapter<VakkenAdapter.VakkenView
     private Cursor mCursor;
     private OnItemClickListener mListener;
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
         void onItemClick(int position, long sqltag);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener){
+    public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
     }
 
-    public VakkenAdapter(Context context, Cursor cursor){
+    public VakkenAdapter(Context context, Cursor cursor) {
         mContext = context;
         mCursor = cursor;
     }
@@ -46,12 +46,12 @@ public class VakkenAdapter extends RecyclerView.Adapter<VakkenAdapter.VakkenView
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listener != null){
+                    if (listener != null) {
 
                         int position = getAdapterPosition();
                         long sqltag = (long) itemView.getTag();
 
-                        if (position != RecyclerView.NO_POSITION){
+                        if (position != RecyclerView.NO_POSITION) {
                             listener.onItemClick(position, sqltag);
                         }
                     }
@@ -70,7 +70,7 @@ public class VakkenAdapter extends RecyclerView.Adapter<VakkenAdapter.VakkenView
 
     @Override
     public void onBindViewHolder(@NonNull VakkenViewHolder holder, int position) {
-        if(!mCursor.moveToPosition(position)){
+        if (!mCursor.moveToPosition(position)) {
             return;
         }
 
@@ -82,9 +82,9 @@ public class VakkenAdapter extends RecyclerView.Adapter<VakkenAdapter.VakkenView
         holder.cijferText.setText(String.valueOf(cijfer));
         holder.itemView.setTag(id);
 
-        if(cijfer < 5.5){
+        if (cijfer < 5.5) {
             holder.image.setImageResource(R.drawable.completed_false);
-        }else{
+        } else {
             holder.image.setImageResource(R.drawable.completed_true);
         }
 
@@ -95,14 +95,14 @@ public class VakkenAdapter extends RecyclerView.Adapter<VakkenAdapter.VakkenView
         return mCursor.getCount();
     }
 
-    public void swapCursor(Cursor newCursor){
-        if (mCursor != null){
+    public void swapCursor(Cursor newCursor) {
+        if (mCursor != null) {
             mCursor.close();
         }
 
         mCursor = newCursor;
 
-        if (newCursor != null){
+        if (newCursor != null) {
             notifyDataSetChanged();
         }
     }

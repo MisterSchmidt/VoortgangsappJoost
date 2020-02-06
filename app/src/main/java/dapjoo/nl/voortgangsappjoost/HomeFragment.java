@@ -36,12 +36,12 @@ public class HomeFragment extends Fragment {
     public Cursor fetchEC(double minCijfer) {
         return mDatabase.rawQuery(
                 "SELECT " + VakkenContract.VakkenEntry.COLUMN_EC +
-                 " FROM " + VakkenContract.VakkenEntry.TABLE_NAME +
-                 " WHERE " + VakkenContract.VakkenEntry.COLUMN_CIJFER + " > " + minCijfer
-                ,null);
+                        " FROM " + VakkenContract.VakkenEntry.TABLE_NAME +
+                        " WHERE " + VakkenContract.VakkenEntry.COLUMN_CIJFER + " > " + minCijfer
+                , null);
     }
 
-    private int getTotalEC(){
+    private int getTotalEC() {
         Cursor cTotalEC = fetchEC(-1);
         int i = 0;
         try {
@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private int getReachedEC(){
+    private int getReachedEC() {
         Cursor cReachedEC = fetchEC(5.4);
         int i = 0;
         try {

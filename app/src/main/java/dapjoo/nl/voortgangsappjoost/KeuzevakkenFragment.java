@@ -3,20 +3,17 @@ package dapjoo.nl.voortgangsappjoost;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import static android.content.ContentValues.TAG;
 
 public class KeuzevakkenFragment extends Fragment {
 
@@ -44,6 +41,15 @@ public class KeuzevakkenFragment extends Fragment {
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new VakkenAdapter(getActivity(), fetchAllItems());
         recyclerview.setAdapter(mAdapter);
+
+        Button btn = view.findViewById(R.id.btn_add);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogVakToevoegen dialogVakToevoegen = new DialogVakToevoegen();
+                dialogVakToevoegen.show(getActivity().getSupportFragmentManager(), "Dialog Vak Toevoegen");
+            }
+        });
 
         TextView tv = view.findViewById(R.id.keuzevakken_ec);
         tv.setText(getReachedEC(schooljaar, 5.4) + "/" + getTotalEC(schooljaar, -1));
@@ -73,7 +79,7 @@ public class KeuzevakkenFragment extends Fragment {
     }
 
     // Voert een DB entry uit en genereerd een lijst van items op volgorde voor de Recyclerview
-    private Cursor fetchAllItems(){
+    private Cursor fetchAllItems() {
         return mDatabase.query(
                 VakkenContract.VakkenEntry.TABLE_NAME,
                 null,
@@ -91,7 +97,7 @@ public class KeuzevakkenFragment extends Fragment {
                         " FROM " + VakkenContract.VakkenEntry.TABLE_NAME +
                         " WHERE " + VakkenContract.VakkenEntry.COLUMN_SCHOOLJAAR + " = " + schooljaar +
                         " AND " + VakkenContract.VakkenEntry.COLUMN_CIJFER + " > " + minCijfer
-                ,null);
+                , null);
     }
 
     public Cursor fetchNaam(long id) {
@@ -99,7 +105,7 @@ public class KeuzevakkenFragment extends Fragment {
                 "SELECT " + VakkenContract.VakkenEntry.COLUMN_NAAM +
                         " FROM " + VakkenContract.VakkenEntry.TABLE_NAME +
                         " WHERE " + VakkenContract.VakkenEntry._ID + " = " + id
-                ,null);
+                , null);
     }
 
 
@@ -108,7 +114,7 @@ public class KeuzevakkenFragment extends Fragment {
                 "SELECT " + VakkenContract.VakkenEntry.COLUMN_CIJFER +
                         " FROM " + VakkenContract.VakkenEntry.TABLE_NAME +
                         " WHERE " + VakkenContract.VakkenEntry._ID + " = " + id
-                ,null);
+                , null);
     }
 
     public Cursor fetchNotitie(long id) {
@@ -116,10 +122,10 @@ public class KeuzevakkenFragment extends Fragment {
                 "SELECT " + VakkenContract.VakkenEntry.COLUMN_NOTITIE +
                         " FROM " + VakkenContract.VakkenEntry.TABLE_NAME +
                         " WHERE " + VakkenContract.VakkenEntry._ID + " = " + id
-                ,null);
+                , null);
     }
 
-    private String getNaam(long id){
+    private String getNaam(long id) {
         String i = "Default";
         Cursor c = fetchNaam(id);
         try {
@@ -132,7 +138,7 @@ public class KeuzevakkenFragment extends Fragment {
         }
     }
 
-    private double getCijfer(long id){
+    private double getCijfer(long id) {
         double i = 0.0;
         Cursor c = fetchCijfer(id);
         try {
@@ -145,7 +151,7 @@ public class KeuzevakkenFragment extends Fragment {
         }
     }
 
-    private String getNotitie(long id){
+    private String getNotitie(long id) {
         String i = "Default";
         Cursor c = fetchNotitie(id);
         try {
@@ -158,7 +164,7 @@ public class KeuzevakkenFragment extends Fragment {
         }
     }
 
-    private int getTotalEC(int sj, double mc ){
+    private int getTotalEC(int sj, double mc) {
         Cursor c = fetchEC(sj, mc);
         int i = 0;
         try {
@@ -171,7 +177,7 @@ public class KeuzevakkenFragment extends Fragment {
         }
     }
 
-    private int getReachedEC(int sj, double mc){
+    private int getReachedEC(int sj, double mc) {
         Cursor c = fetchEC(sj, mc);
         int i = 0;
         try {

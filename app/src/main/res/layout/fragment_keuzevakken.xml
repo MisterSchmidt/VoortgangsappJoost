@@ -18,12 +18,12 @@
         android:id="@+id/btn_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Toevoegen"
+        android:text="Voeg een keuzevak toe"
         android:layout_below="@id/keuzevakken_ec"
-        android:layout_marginTop="-16dp"
+        android:layout_marginTop="-13dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"/>
+        android:layout_marginLeft="8dp"
+        android:background="#EEEEEE"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"

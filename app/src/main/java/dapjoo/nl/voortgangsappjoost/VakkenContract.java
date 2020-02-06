@@ -4,7 +4,7 @@ import android.provider.BaseColumns;
 
 public class VakkenContract {
 
-    private VakkenContract(){
+    private VakkenContract() {
         //We willen niet perongeluk objecten gaan maken van deze class
     }
 

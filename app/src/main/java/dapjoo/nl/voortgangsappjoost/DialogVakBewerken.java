@@ -10,13 +10,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 import static android.content.ContentValues.TAG;
 
-public class DialogVakBewerken extends AppCompatDialogFragment{
+public class DialogVakBewerken extends AppCompatDialogFragment {
 
     private EditText cijferBewerken;
     private EditText notitieBewerken;
@@ -28,7 +29,7 @@ public class DialogVakBewerken extends AppCompatDialogFragment{
     private int mSchooljaar;
     private SQLiteDatabase mDatabase;
 
-    public Dialog onCreateDialog(Bundle savedInstanceState){
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_vak_bewerken, null);
@@ -48,29 +49,78 @@ public class DialogVakBewerken extends AppCompatDialogFragment{
         cijferBewerken.setText(Double.toString(mCijfer));
         notitieBewerken.setText(mNotitie);
 
-        builder.setView(view)
-                .setTitle(mNaam)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+        if (mSchooljaar == 0) {
+            builder.setView(view)
+                    .setTitle(mNaam)
+                    .setPositiveButton("Bewerken", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                        String cijferString = cijferBewerken.getText().toString();
-                        try {
-                            mCijfer = Double.parseDouble(cijferString); // Make use of autoboxing.  It's also easier to read.
-                        } catch (NumberFormatException e) {
-                            // p did not contain a valid double
+                            String cijferString = cijferBewerken.getText().toString();
+                            try {
+                                mCijfer = Double.parseDouble(cijferString); // Make use of autoboxing.  It's also easier to read.
+                                if (mCijfer > 10) {
+                                    mCijfer = 10.0;
+                                }
+                                if (mCijfer < 1.0) {
+                                    mCijfer = 1.0;
+                                }
+                                mCijfer = Math.round(mCijfer * 10) / 10.0;
+
+                            } catch (NumberFormatException e) {
+                                Toast.makeText(getActivity(), "FOUTMELDING - Noteer het cijfer als 7 of 7.0", Toast.LENGTH_LONG).show();
+                            }
+                            mNotitie = notitieBewerken.getText().toString();
+                            listener.editVak(mId, mCijfer, mNotitie, mSchooljaar);
                         }
-                        mNotitie = notitieBewerken.getText().toString();
-                        listener.editVak(mId, mCijfer, mNotitie, mSchooljaar);
-                    }
-                })
-                .setNegativeButton("Annuleren", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    })
+                    .setNegativeButton("Annuleren", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                    }
+                        }
+                    }).setNeutralButton("Verwijderen", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    listener.deleteVak(mId);
                 }
-        );
+
+            });
+        } else {
+            builder.setView(view)
+                    .setTitle(mNaam)
+                    .setPositiveButton("Bewerken", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            String cijferString = cijferBewerken.getText().toString();
+                            try {
+
+                                mCijfer = Double.parseDouble(cijferString); // Make use of autoboxing.  It's also easier to read.
+                                if (mCijfer > 10) {
+                                    mCijfer = 10.0;
+                                }
+                                if (mCijfer < 1.0) {
+                                    mCijfer = 1.0;
+                                }
+                                mCijfer = Math.round(mCijfer * 10) / 10.0;
+
+                            } catch (NumberFormatException e) {
+                                Toast.makeText(getActivity(), "FOUTMELDING - Noteer het cijfer als 7 of 7.0", Toast.LENGTH_LONG).show();
+                            }
+                            mNotitie = notitieBewerken.getText().toString();
+                            listener.editVak(mId, mCijfer, mNotitie, mSchooljaar);
+                        }
+                    })
+                    .setNegativeButton("Annuleren", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+
+                    });
+        }
+
 
         return builder.create();
 
@@ -80,16 +130,18 @@ public class DialogVakBewerken extends AppCompatDialogFragment{
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        try{
+        try {
             listener = (DialogVakBewerkenListener) context;
-        } catch (ClassCastException e){
+        } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + "must implement DialogVakBewerkenistener");
         }
     }
 
 
-    public interface DialogVakBewerkenListener{
+    public interface DialogVakBewerkenListener {
         void editVak(long mId, double mCijfer, String mNotitie, int mSchooljaar);
+
+        void deleteVak(long mId);
     }
 }
 

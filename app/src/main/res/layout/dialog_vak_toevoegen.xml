@@ -6,31 +6,30 @@
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/vak_bewerken_hint_cijfer"
+        android:id="@+id/vak_toevoegen_hint_naam"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cijfer"/>
+        android:text="Naam van het vak"/>
 
     <EditText
-        android:id="@+id/vak_bewerken_cijfer"
+        android:id="@+id/vak_toevoegen_naam"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/vak_bewerken_hint_cijfer"
+        android:layout_below="@id/vak_toevoegen_hint_naam"
         android:maxLines="1"/>
 
     <TextView
-        android:id="@+id/vak_bewerken_hint_notitie"
+        android:id="@+id/vak_toevoegen_hint_ec"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Notitie"
-        android:layout_below="@id/vak_bewerken_cijfer"/>
+        android:text="Aantal EC"
+        android:layout_below="@id/vak_toevoegen_naam"/>
 
     <EditText
-        android:id="@+id/vak_bewerken_notitie"
+        android:id="@+id/vak_toevoegen_ec"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minLines="10"
-        android:maxLines="10"
-        android:layout_below="@+id/vak_bewerken_hint_notitie"/>
+        android:layout_below="@+id/vak_toevoegen_hint_ec"
+        android:maxLines="1"/>
 
 </RelativeLayout>

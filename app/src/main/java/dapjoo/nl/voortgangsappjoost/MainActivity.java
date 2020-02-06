@@ -16,9 +16,10 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity implements DialogFirst.DialogFirstListener, NavigationView.OnNavigationItemSelectedListener, DialogVakBewerken.DialogVakBewerkenListener {
+public class MainActivity extends AppCompatActivity implements DialogFirst.DialogFirstListener, NavigationView.OnNavigationItemSelectedListener, DialogVakBewerken.DialogVakBewerkenListener, DialogVakToevoegen.DialogVakToevoegenListener {
 
     private DrawerLayout drawer;
     private TextView tvGebruiker;
@@ -65,15 +66,15 @@ public class MainActivity extends AppCompatActivity implements DialogFirst.Dialo
         toggle.syncState();
 
         // Start dialog of laad settigs
-        if(firstStart){
+        if (firstStart) {
             createDefaultVakken();
             showDialogFirst();
-        }else{
+        } else {
             insertPrefs();
         }
 
         //Open eerste pagina zonder er op te klikken
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_home);
         }
@@ -81,51 +82,51 @@ public class MainActivity extends AppCompatActivity implements DialogFirst.Dialo
     }
 
     //MENU - Wat gebeurt er als je op een knop klikt (opent een nieuwe fragment of voert code uit)
-    public boolean onNavigationItemSelected(@NonNull MenuItem item){
-        switch(item.getItemId()){
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
 
             case R.id.nav_home:
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
                 mTitle.setText("Voortgangs App");
                 break;
 
             case R.id.nav_schooljaar1:
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Schooljaar1Fragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Schooljaar1Fragment()).commit();
                 mTitle.setText("Schooljaar 1");
                 break;
 
             case R.id.nav_schooljaar2:
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Schooljaar2Fragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Schooljaar2Fragment()).commit();
                 mTitle.setText("Schooljaar 2");
                 break;
 
             case R.id.nav_schooljaar3:
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Schooljaar3Fragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Schooljaar3Fragment()).commit();
                 mTitle.setText("Schooljaar 3");
                 break;
 
             case R.id.nav_schooljaar4:
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Schooljaar4Fragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Schooljaar4Fragment()).commit();
                 mTitle.setText("Schooljaar 4");
                 break;
 
             case R.id.nav_keuzevakken:
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new KeuzevakkenFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new KeuzevakkenFragment()).commit();
                 mTitle.setText("Keuzevakken");
                 break;
 
             case R.id.nav_upload:
-                Toast.makeText(this,"No network", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "No network", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.nav_download:
-                Toast.makeText(this,"No network", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "No network", Toast.LENGTH_SHORT).show();
                 break;
         }
 
@@ -134,16 +135,16 @@ public class MainActivity extends AppCompatActivity implements DialogFirst.Dialo
     }
 
     //Weg faden van drawer
-    public void onBackPressed(){
-        if(drawer.isDrawerOpen(GravityCompat.START)){
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        }else {
+        } else {
             super.onBackPressed();
         }
     }
 
     //Inladen van settings voor de navigation drawer
-    private void insertPrefs(){
+    private void insertPrefs() {
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         String usr = prefs.getString("user", "");
         String eml = prefs.getString("email", "");
@@ -152,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements DialogFirst.Dialo
     }
 
     //Laten zien van de "one time" dialog
-    private void showDialogFirst(){
+    private void showDialogFirst() {
         DialogFirst dialogFirst = new DialogFirst();
         dialogFirst.show(getSupportFragmentManager(), "Dialog First");
 
@@ -176,23 +177,23 @@ public class MainActivity extends AppCompatActivity implements DialogFirst.Dialo
     }
 
     //invoeren van de standaard vakken in SQLITE bij eerste keer opstarten
-    public void createDefaultVakken(){
+    public void createDefaultVakken() {
 
-        String[] naam = new String[] {"IPMEDT1", "IMHTB", "IOPR1", "IPBIT1", "ISMI", "IIBPM", "IRDB", "IPSEN1", "IMUML", "IOPR2", "ITIM", "IPFIT1",
-        "IFIT", "IWEB", "INST", "ICOMMP", "ISLP", /*17*/ "IRDBMS", "IPMEDT2", "IMTD1", "IQUA", "IPMEDT4", "IMTPMD", "IITORG", "IPMEDT3", "IMTUE", "ISEC",
-        "IPMEDT5", "IMTHE1", "ICOMMH", "ISLH1", /*31*/ "IETH", "ISCRIP", "IPMEDTH", "IMTCM", "IMTHMI", "IMTMC", "ISLH2", "IKM30", /*39*/ "ISLH3", "IWLS",
-        "IWLA" /*42*/};
+        String[] naam = new String[]{"IPMEDT1", "IMHTB", "IOPR1", "IPBIT1", "ISMI", "IIBPM", "IRDB", "IPSEN1", "IMUML", "IOPR2", "ITIM", "IPFIT1",
+                "IFIT", "IWEB", "INST", "ICOMMP", "ISLP", /*17*/ "IRDBMS", "IPMEDT2", "IMTD1", "IQUA", "IPMEDT4", "IMTPMD", "IITORG", "IPMEDT3", "IMTUE", "ISEC",
+                "IPMEDT5", "IMTHE1", "ICOMMH", "ISLH1", /*31*/ "IETH", "ISCRIP", "IPMEDTH", "IMTCM", "IMTHMI", "IMTMC", "ISLH2", "IKM30", /*39*/ "ISLH3", "IWLS",
+                "IWLA" /*42*/};
 
-        int[] ec = new int[] {6, 3, 4, 5, 3, 3, 3, 5, 3, 4, 3, 5, 3, 3, 3, 3, 1, /*17*/ 3, 6, 3, 3, 6, 3, 3, 6, 3, 3, 6, 3, 3, 1, /*31*/
-        3, 3, 9, 3, 3, 3, 1, 30, /*39*/ 1, 30, 30 /*42*/};
+        int[] ec = new int[]{6, 3, 4, 5, 3, 3, 3, 5, 3, 4, 3, 5, 3, 3, 3, 3, 1, /*17*/ 3, 6, 3, 3, 6, 3, 3, 6, 3, 3, 6, 3, 3, 1, /*31*/
+                3, 3, 9, 3, 3, 3, 1, 30, /*39*/ 1, 30, 30 /*42*/};
 
-        int[] schooljaar = new int[] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ,1, /*17*/ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, /*31*/
-        3, 3, 3, 3, 3, 3, 3, 3, /*39*/ 4, 4, 4 /*42*/};
+        int[] schooljaar = new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, /*17*/ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, /*31*/
+                3, 3, 3, 3, 3, 3, 3, 3, /*39*/ 4, 4, 4 /*42*/};
 
-        double cijfer = 0.0;
+        double cijfer = 1;
         String notitie = "";
 
-        for(int i = 0; i < 42; i++){
+        for (int i = 0; i < 42; i++) {
             ContentValues cv = new ContentValues();
             cv.put(VakkenContract.VakkenEntry.COLUMN_NAAM, naam[i]);
             cv.put(VakkenContract.VakkenEntry.COLUMN_CIJFER, cijfer);
@@ -208,34 +209,53 @@ public class MainActivity extends AppCompatActivity implements DialogFirst.Dialo
     @Override
     public void editVak(long id, double cijfer, String notitie, int schooljaar) {
 
-        mDatabase.execSQL( "UPDATE " + VakkenContract.VakkenEntry.TABLE_NAME +
+        mDatabase.execSQL("UPDATE " + VakkenContract.VakkenEntry.TABLE_NAME +
                 " SET " + VakkenContract.VakkenEntry.COLUMN_NOTITIE + " = '" + notitie +
                 "' WHERE " + VakkenContract.VakkenEntry._ID + " = " + id);
 
-        mDatabase.execSQL( "UPDATE " + VakkenContract.VakkenEntry.TABLE_NAME +
+        mDatabase.execSQL("UPDATE " + VakkenContract.VakkenEntry.TABLE_NAME +
                 " SET " + VakkenContract.VakkenEntry.COLUMN_CIJFER + " = '" + cijfer +
                 "' WHERE " + VakkenContract.VakkenEntry._ID + " = " + id);
 
-        if(schooljaar == 0){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new KeuzevakkenFragment()).commit();
+        if (schooljaar == 0) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new KeuzevakkenFragment()).commit();
             mTitle.setText("Keuzevakken");
-        }
-        else if(schooljaar == 1){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Schooljaar1Fragment()).commit();
+        } else if (schooljaar == 1) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Schooljaar1Fragment()).commit();
             mTitle.setText("Schooljaar 1");
-        }
-        else if(schooljaar == 2){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Schooljaar2Fragment()).commit();
+        } else if (schooljaar == 2) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Schooljaar2Fragment()).commit();
             mTitle.setText("Schooljaar 2");
-        }
-        else if(schooljaar == 3){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Schooljaar3Fragment()).commit();
+        } else if (schooljaar == 3) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Schooljaar3Fragment()).commit();
             mTitle.setText("Schooljaar 3");
-        }
-        else if(schooljaar == 4){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Schooljaar4Fragment()).commit();
+        } else if (schooljaar == 4) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Schooljaar4Fragment()).commit();
             mTitle.setText("Schooljaar 4");
         }
+    }
+
+    @Override
+    public void deleteVak(long id) {
+        mDatabase.delete(VakkenContract.VakkenEntry.TABLE_NAME, VakkenContract.VakkenEntry._ID + " = " + id, null);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new KeuzevakkenFragment()).commit();
+        mTitle.setText("Keuzevakken");
+    }
+
+    @Override
+    public void addKeuzevak(String naam, int ec) {
+        ContentValues cv = new ContentValues();
+        cv.put(VakkenContract.VakkenEntry.COLUMN_NAAM, naam);
+        cv.put(VakkenContract.VakkenEntry.COLUMN_CIJFER, 1.0);
+        cv.put(VakkenContract.VakkenEntry.COLUMN_SCHOOLJAAR, 0);
+        cv.put(VakkenContract.VakkenEntry.COLUMN_EC, ec);
+        cv.put(VakkenContract.VakkenEntry.COLUMN_NOTITIE, "");
+
+        mDatabase.insert(VakkenContract.VakkenEntry.TABLE_NAME, null, cv);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new KeuzevakkenFragment()).commit();
+        mTitle.setText("Keuzevakken");
     }
 }
 

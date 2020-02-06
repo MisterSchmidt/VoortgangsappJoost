@@ -17,15 +17,18 @@ public class DialogFirst extends AppCompatDialogFragment {
     private EditText etEmail;
     private DialogFirstListener listener;
 
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-    public Dialog onCreateDialog(Bundle savedInstanceState){
+        //Genereer de dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_first, null);
 
+        //Haal de EditViews binnen
         etUser = view.findViewById(R.id.et_naam);
         etEmail = view.findViewById(R.id.et_user);
 
+        //Bouw de dialog
         builder.setView(view)
                 .setTitle("Jouw gegevens")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -38,22 +41,23 @@ public class DialogFirst extends AppCompatDialogFragment {
                 });
 
         return builder.create();
-
     }
+
+    //Genereer een listener
 
     @Override
     public void onAttach(Context context) {
+
         super.onAttach(context);
 
-        try{
+        try {
             listener = (DialogFirstListener) context;
-        } catch (ClassCastException e){
+        } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + "must implement DialogFirstListener");
         }
     }
 
-
-    public interface DialogFirstListener{
+    public interface DialogFirstListener {
         void applyTexts(String usr, String eml);
     }
 

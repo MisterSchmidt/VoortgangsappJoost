@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class Schooljaar3Fragment extends Fragment{
+public class Schooljaar3Fragment extends Fragment {
 
     private SQLiteDatabase mDatabase;
     private VakkenAdapter mAdapter;
@@ -75,7 +75,7 @@ public class Schooljaar3Fragment extends Fragment{
     }
 
     // Voert een DB entry uit en genereerd een lijst van items op volgorde voor de Recyclerview
-    private Cursor fetchAllItems(){
+    private Cursor fetchAllItems() {
         return mDatabase.query(
                 VakkenContract.VakkenEntry.TABLE_NAME,
                 null,
@@ -93,7 +93,7 @@ public class Schooljaar3Fragment extends Fragment{
                         " FROM " + VakkenContract.VakkenEntry.TABLE_NAME +
                         " WHERE " + VakkenContract.VakkenEntry.COLUMN_SCHOOLJAAR + " = " + schooljaar +
                         " AND " + VakkenContract.VakkenEntry.COLUMN_CIJFER + " > " + minCijfer
-                ,null);
+                , null);
     }
 
     public Cursor fetchNaam(long id) {
@@ -101,7 +101,7 @@ public class Schooljaar3Fragment extends Fragment{
                 "SELECT " + VakkenContract.VakkenEntry.COLUMN_NAAM +
                         " FROM " + VakkenContract.VakkenEntry.TABLE_NAME +
                         " WHERE " + VakkenContract.VakkenEntry._ID + " = " + id
-                ,null);
+                , null);
     }
 
 
@@ -110,7 +110,7 @@ public class Schooljaar3Fragment extends Fragment{
                 "SELECT " + VakkenContract.VakkenEntry.COLUMN_CIJFER +
                         " FROM " + VakkenContract.VakkenEntry.TABLE_NAME +
                         " WHERE " + VakkenContract.VakkenEntry._ID + " = " + id
-                ,null);
+                , null);
     }
 
     public Cursor fetchNotitie(long id) {
@@ -118,10 +118,10 @@ public class Schooljaar3Fragment extends Fragment{
                 "SELECT " + VakkenContract.VakkenEntry.COLUMN_NOTITIE +
                         " FROM " + VakkenContract.VakkenEntry.TABLE_NAME +
                         " WHERE " + VakkenContract.VakkenEntry._ID + " = " + id
-                ,null);
+                , null);
     }
 
-    private String getNaam(long id){
+    private String getNaam(long id) {
         String i = "Default";
         Cursor c = fetchNaam(id);
         try {
@@ -134,7 +134,7 @@ public class Schooljaar3Fragment extends Fragment{
         }
     }
 
-    private double getCijfer(long id){
+    private double getCijfer(long id) {
         double i = 0.0;
         Cursor c = fetchCijfer(id);
         try {
@@ -147,7 +147,7 @@ public class Schooljaar3Fragment extends Fragment{
         }
     }
 
-    private String getNotitie(long id){
+    private String getNotitie(long id) {
         String i = "Default";
         Cursor c = fetchNotitie(id);
         try {
@@ -160,7 +160,7 @@ public class Schooljaar3Fragment extends Fragment{
         }
     }
 
-    private int getTotalEC(int sj, double mc ){
+    private int getTotalEC(int sj, double mc) {
         Cursor c = fetchEC(sj, mc);
         int i = 0;
         try {
@@ -173,7 +173,7 @@ public class Schooljaar3Fragment extends Fragment{
         }
     }
 
-    private int getReachedEC(int sj, double mc){
+    private int getReachedEC(int sj, double mc) {
         Cursor c = fetchEC(sj, mc);
         int i = 0;
         try {
