@@ -52,7 +52,7 @@ public class KeuzevakkenFragment extends Fragment {
         });
 
         TextView tv = view.findViewById(R.id.keuzevakken_ec);
-        tv.setText(getReachedEC(schooljaar, 5.4) + "/" + getTotalEC(schooljaar, -1));
+        tv.setText(getReachedEC(schooljaar, 5.4) + "/" + getTotalEC(schooljaar, -1) + " EC");
 
         mAdapter.swapCursor(fetchAllItems());
 

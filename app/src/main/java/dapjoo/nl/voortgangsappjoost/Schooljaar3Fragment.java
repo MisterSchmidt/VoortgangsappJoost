@@ -46,7 +46,7 @@ public class Schooljaar3Fragment extends Fragment {
 
         // Genereerd het aantal EC bovenin de pagina
         TextView tv = view.findViewById(R.id.schooljaar3_ec);
-        tv.setText(getReachedEC(schooljaar, 5.4) + "/" + getTotalEC(schooljaar, -1));
+        tv.setText(getReachedEC(schooljaar, 5.4) + "/" + getTotalEC(schooljaar, -1) + " EC");
 
         // Voert het refresh commando uit voor de lijst
         mAdapter.swapCursor(fetchAllItems());
