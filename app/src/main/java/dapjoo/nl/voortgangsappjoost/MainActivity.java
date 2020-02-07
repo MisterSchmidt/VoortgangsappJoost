@@ -3,7 +3,6 @@ package dapjoo.nl.voortgangsappjoost;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,11 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements DialogFirst.DialogFirstListener, NavigationView.OnNavigationItemSelectedListener, DialogVakBewerken.DialogVakBewerkenListener, DialogVakToevoegen.DialogVakToevoegenListener {
@@ -78,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements DialogFirst.Dialo
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_home);
         }
-        /////* Toolbar gedeelte en navigation drawer */////
     }
 
     //MENU - Wat gebeurt er als je op een knop klikt (opent een nieuwe fragment of voert code uit)
@@ -205,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements DialogFirst.Dialo
         }
     }
 
-    // Voor het updaten van een item
+    // Voor het updaten van een item (geimplementeerd)
     @Override
     public void editVak(long id, double cijfer, String notitie, int schooljaar) {
 
@@ -217,6 +213,7 @@ public class MainActivity extends AppCompatActivity implements DialogFirst.Dialo
                 " SET " + VakkenContract.VakkenEntry.COLUMN_CIJFER + " = '" + cijfer +
                 "' WHERE " + VakkenContract.VakkenEntry._ID + " = " + id);
 
+        //pagina herladen
         if (schooljaar == 0) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new KeuzevakkenFragment()).commit();
             mTitle.setText("Keuzevakken");
@@ -235,14 +232,17 @@ public class MainActivity extends AppCompatActivity implements DialogFirst.Dialo
         }
     }
 
+    // Voor het deleten van een vak (geimplementeerd)
     @Override
     public void deleteVak(long id) {
         mDatabase.delete(VakkenContract.VakkenEntry.TABLE_NAME, VakkenContract.VakkenEntry._ID + " = " + id, null);
 
+        //pagina herladen
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new KeuzevakkenFragment()).commit();
         mTitle.setText("Keuzevakken");
     }
 
+    // Voor het toevoegen van een vak (geimplementeerd)
     @Override
     public void addKeuzevak(String naam, int ec) {
         ContentValues cv = new ContentValues();
@@ -254,6 +254,7 @@ public class MainActivity extends AppCompatActivity implements DialogFirst.Dialo
 
         mDatabase.insert(VakkenContract.VakkenEntry.TABLE_NAME, null, cv);
 
+        //Pagina herladen
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new KeuzevakkenFragment()).commit();
         mTitle.setText("Keuzevakken");
     }

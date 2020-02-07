@@ -37,6 +37,7 @@ public class DialogVakBewerken extends AppCompatDialogFragment {
         cijferBewerken = view.findViewById(R.id.vak_bewerken_cijfer);
         notitieBewerken = view.findViewById(R.id.vak_bewerken_notitie);
 
+        //Uitpakken van de bijbehorende bundle aan info
         Bundle mArgs = getArguments();
         mId = mArgs.getLong("id");
         mNotitie = mArgs.getString("notitie");
@@ -46,9 +47,11 @@ public class DialogVakBewerken extends AppCompatDialogFragment {
 
         Log.d(TAG, " SQL Tag: " + mId);
 
+
         cijferBewerken.setText(Double.toString(mCijfer));
         notitieBewerken.setText(mNotitie);
 
+        //Bouwen van de alertdialog (als het een keuzevak is geef een extra delete button)
         if (mSchooljaar == 0) {
             builder.setView(view)
                     .setTitle(mNaam)
@@ -96,7 +99,7 @@ public class DialogVakBewerken extends AppCompatDialogFragment {
                             String cijferString = cijferBewerken.getText().toString();
                             try {
 
-                                mCijfer = Double.parseDouble(cijferString); // Make use of autoboxing.  It's also easier to read.
+                                mCijfer = Double.parseDouble(cijferString);
                                 if (mCijfer > 10) {
                                     mCijfer = 10.0;
                                 }
@@ -126,6 +129,7 @@ public class DialogVakBewerken extends AppCompatDialogFragment {
 
     }
 
+    //Listener
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -138,6 +142,7 @@ public class DialogVakBewerken extends AppCompatDialogFragment {
     }
 
 
+    //Methode die geimplementeerd word in mainactivity
     public interface DialogVakBewerkenListener {
         void editVak(long mId, double mCijfer, String mNotitie, int mSchooljaar);
 

@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -25,6 +24,8 @@ public class Schooljaar1Fragment extends Fragment {
     @Nullable
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+
+        //Genereer Fragment
         View view = inflater.inflate(R.layout.fragment_schooljaar1, container, false);
         return view;
 
@@ -74,7 +75,7 @@ public class Schooljaar1Fragment extends Fragment {
         });
     }
 
-    // Voert een DB entry uit en genereerd een lijst van items op volgorde voor de Recyclerview
+    // Voert een DB query uit en genereerd een lijst van items op volgorde voor de Recyclerview
     private Cursor fetchAllItems() {
         return mDatabase.query(
                 VakkenContract.VakkenEntry.TABLE_NAME,
@@ -87,6 +88,7 @@ public class Schooljaar1Fragment extends Fragment {
         );
     }
 
+    // DB query voor aantal EC
     public Cursor fetchEC(int schooljaar, double minCijfer) {
         return mDatabase.rawQuery(
                 "SELECT " + VakkenContract.VakkenEntry.COLUMN_EC +
@@ -96,6 +98,7 @@ public class Schooljaar1Fragment extends Fragment {
                 , null);
     }
 
+    //DB query voor naam van het vak
     public Cursor fetchNaam(long id) {
         return mDatabase.rawQuery(
                 "SELECT " + VakkenContract.VakkenEntry.COLUMN_NAAM +
@@ -105,6 +108,7 @@ public class Schooljaar1Fragment extends Fragment {
     }
 
 
+    //DB query voor het cijfer van het vak
     public Cursor fetchCijfer(long id) {
         return mDatabase.rawQuery(
                 "SELECT " + VakkenContract.VakkenEntry.COLUMN_CIJFER +
@@ -113,6 +117,7 @@ public class Schooljaar1Fragment extends Fragment {
                 , null);
     }
 
+    //DB query voor de notitie van het vak
     public Cursor fetchNotitie(long id) {
         return mDatabase.rawQuery(
                 "SELECT " + VakkenContract.VakkenEntry.COLUMN_NOTITIE +
@@ -121,6 +126,7 @@ public class Schooljaar1Fragment extends Fragment {
                 , null);
     }
 
+    //Aansturen van de DB query doormiddel van een cursor
     private String getNaam(long id) {
         String i = "Default";
         Cursor c = fetchNaam(id);
@@ -134,6 +140,7 @@ public class Schooljaar1Fragment extends Fragment {
         }
     }
 
+    //Aansturen van de DB query doormiddel van een cursor
     private double getCijfer(long id) {
         double i = 0.0;
         Cursor c = fetchCijfer(id);
@@ -147,6 +154,7 @@ public class Schooljaar1Fragment extends Fragment {
         }
     }
 
+    //Aansturen van de DB query doormiddel van een cursor
     private String getNotitie(long id) {
         String i = "Default";
         Cursor c = fetchNotitie(id);
@@ -160,6 +168,7 @@ public class Schooljaar1Fragment extends Fragment {
         }
     }
 
+    //Aansturen van de DB query doormiddel van een cursor
     private int getTotalEC(int sj, double mc) {
         Cursor c = fetchEC(sj, mc);
         int i = 0;
@@ -173,6 +182,7 @@ public class Schooljaar1Fragment extends Fragment {
         }
     }
 
+    //Aansturen van de DB query doormiddel van een cursor
     private int getReachedEC(int sj, double mc) {
         Cursor c = fetchEC(sj, mc);
         int i = 0;

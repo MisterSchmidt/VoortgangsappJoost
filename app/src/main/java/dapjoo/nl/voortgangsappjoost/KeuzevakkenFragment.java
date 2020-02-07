@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -42,6 +41,7 @@ public class KeuzevakkenFragment extends Fragment {
         mAdapter = new VakkenAdapter(getActivity(), fetchAllItems());
         recyclerview.setAdapter(mAdapter);
 
+        //Extra button en onclick toevoegen voor het aanmaken een vak
         Button btn = view.findViewById(R.id.btn_add);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

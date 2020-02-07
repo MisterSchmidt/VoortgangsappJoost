@@ -8,6 +8,7 @@ public class VakkenContract {
         //We willen niet perongeluk objecten gaan maken van deze class
     }
 
+    //Koppelen van fatsoenlijke namen aan de echte namen van de database
     public static final class VakkenEntry implements BaseColumns {
         public static final String TABLE_NAME = "vakken";
         public static final String COLUMN_NAAM = "naam";

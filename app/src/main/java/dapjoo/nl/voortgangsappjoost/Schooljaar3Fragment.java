@@ -1,5 +1,7 @@
 package dapjoo.nl.voortgangsappjoost;
 
+// Zie schooljaar 1 fragment voor de comments
+
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;

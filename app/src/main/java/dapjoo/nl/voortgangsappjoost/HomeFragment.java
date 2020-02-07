@@ -8,18 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +40,7 @@ public class HomeFragment extends Fragment {
         TextView tv = view.findViewById(R.id.home_ec);
         tv.setText(getReachedEC() + "/" + getTotalEC() + " EC");
 
+        //Aanmaken piechart
         PieChart pieChart = view.findViewById(R.id.piechart);
         pieChart.setUsePercentValues(true);
 
@@ -70,17 +68,16 @@ public class HomeFragment extends Fragment {
         //functie om % erbij te krijgen
         pieData.setValueFormatter(new PercentFormatter());
 
-        //Custom colors
+        //Custom colors piechart
         final int[] MijnKleur = {
                 Color.rgb(83,85,114),
                 Color.rgb(72,73,98)};
 
         ArrayList<Integer> colors = new ArrayList<Integer>();
-
         for(int c: MijnKleur) colors.add(c);
-
         pieDataSet.setColors(colors);
 
+        //Animatie piechart vertragen tot 1400ms
         pieChart.animateXY(1400,1440);
     }
 

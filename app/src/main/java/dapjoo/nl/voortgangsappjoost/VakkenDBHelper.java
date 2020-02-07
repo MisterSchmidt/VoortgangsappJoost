@@ -10,11 +10,12 @@ public class VakkenDBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "vakken.db";
     public static final int DATABASE_VERSION = 1;
 
-
+    // De dbhelper om database op juiste wijze aan te roepen in classes
     public VakkenDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    //Bouwen van een database bij eerste startup
     @Override
     public void onCreate(SQLiteDatabase db) {
         final String SQL_CREATE_VAKKENLIST_TABLE = "CREATE TABLE " +
@@ -31,6 +32,7 @@ public class VakkenDBHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_VAKKENLIST_TABLE);
     }
 
+    //Bij het upgraden van een database (gebeurd niet in de app)
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + VakkenContract.VakkenEntry.TABLE_NAME);

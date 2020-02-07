@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
@@ -21,13 +20,16 @@ public class DialogVakToevoegen extends AppCompatDialogFragment {
     private int mEc;
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        //Aanmaken van een Alertdialog
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_vak_toevoegen, null);
 
+        //EditTexts bekijken
         naamToevoegen = view.findViewById(R.id.vak_toevoegen_naam);
         ecToevoegen = view.findViewById(R.id.vak_toevoegen_ec);
 
+        //Genereer de Alertdialog.
         builder.setView(view)
                 .setTitle("Keuzevak Toevoegen")
                 .setPositiveButton("Toevoegen", new DialogInterface.OnClickListener() {
@@ -62,6 +64,7 @@ public class DialogVakToevoegen extends AppCompatDialogFragment {
         return builder.create();
     }
 
+    // Invoeren en controleren van een listener in de mainactivity
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -69,10 +72,11 @@ public class DialogVakToevoegen extends AppCompatDialogFragment {
         try {
             listener = (DialogVakToevoegenListener) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + "must implement DialogFirstListener");
+            throw new ClassCastException(context.toString() + "must implement Dialog Listener");
         }
     }
 
+    // De methode die wordt toegevoegd aan de mainactivity
     public interface DialogVakToevoegenListener {
         void addKeuzevak(String mNaam, int mEc);
     }

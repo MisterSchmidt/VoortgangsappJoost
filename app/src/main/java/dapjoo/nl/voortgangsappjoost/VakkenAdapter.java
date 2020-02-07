@@ -25,11 +25,14 @@ public class VakkenAdapter extends RecyclerView.Adapter<VakkenAdapter.VakkenView
         mListener = listener;
     }
 
+    //Constructor
     public VakkenAdapter(Context context, Cursor cursor) {
         mContext = context;
         mCursor = cursor;
     }
 
+
+    //Voorbereiden van de lijst
     public class VakkenViewHolder extends RecyclerView.ViewHolder {
 
         public TextView naamText;
@@ -60,6 +63,7 @@ public class VakkenAdapter extends RecyclerView.Adapter<VakkenAdapter.VakkenView
         }
     }
 
+    //Bouwen van de lijst
     @NonNull
     @Override
     public VakkenViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -68,6 +72,7 @@ public class VakkenAdapter extends RecyclerView.Adapter<VakkenAdapter.VakkenView
         return new VakkenViewHolder(view, mListener);
     }
 
+    //Koppelen van de gegevens uit de DB aan de losse items in de lijst
     @Override
     public void onBindViewHolder(@NonNull VakkenViewHolder holder, int position) {
         if (!mCursor.moveToPosition(position)) {
@@ -90,6 +95,7 @@ public class VakkenAdapter extends RecyclerView.Adapter<VakkenAdapter.VakkenView
 
     }
 
+    //Geimplementeerde methode getItemCount hiermee wordt de lijst gebouwd per dbquery
     @Override
     public int getItemCount() {
         return mCursor.getCount();
